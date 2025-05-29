@@ -1,0 +1,57 @@
+name: "TerraformCodeQuality"
+
+on:
+  workflow_call:
+    inputs:
+      terraform-version:
+        description: "Terraform version"
+        required: false
+        default: "~1.11"
+        type: string
+      terragrunt-version:
+        description: "Terragrunt version"
+        required: false
+        default: "0.73.13"
+        type: string
+      tflint-version:
+        description: "Tflint version"
+        required: false
+        default: "v0.55.1"
+        type: string
+      terraform-docs-version:
+        description: "Terraform-docs version"
+        required: false
+        default: "v0.19.0"
+        type: string
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - uses: actions/checkout@v3
+      # Setup Terraform
+      - name: Setup terraform ${{ inputs.terraform_version }}
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+      # Setup Terragrunt
+      - name: Setup Terragrunt ${{inputs.terragrunt-version}}
+        uses: autero1/action-terragrunt@v3
+        with:
+          terragrunt-version: ${{inputs.terragrunt-version}}
+      # Setup tflint
+      - name: Setup tflint ${{inputs.tflint-version}}
+        uses: terraform-linters/setup-tflint@v3
+        with:
+          tflint_version: ${{inputs.tflint-version}}
+      # Setup terraform-docs
+      - name: Setup terraform-docs ${{inputs.terraform-docs-version}}
+        run: |
+          wget https://github.com/terraform-docs/terraform-docs/releases/download/${{inputs.terraform-docs-version}}/terraform-docs-${{inputs.terraform-docs-version}}-linux-amd64.tar.gz
+          tar -xzf terraform-docs-${{inputs.terraform-docs-version}}-linux-amd64.tar.gz
+          sudo mv terraform-docs /usr/local/bin/
+      # Run pre-commit
+      - name: pre-commit
+        uses: pre-commit/action@v3.0.0
