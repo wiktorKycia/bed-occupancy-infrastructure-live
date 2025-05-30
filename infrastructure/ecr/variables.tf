@@ -8,8 +8,3 @@ variable "repository_force_delete" {
   type        = bool
   default     = true
 }
-variable "repository_image_scan_on_push" {
-  description = "Indicates whether images are scanned after being pushed to the repository (`true`) or not scanned (`false`)"
-  type        = bool
-  default     = true
-}

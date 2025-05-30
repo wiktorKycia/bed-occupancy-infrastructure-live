@@ -61,19 +61,3 @@ module "ecr" {
     Environment = "dev"
   })
 }
-
-# tu jest resource zakomentowany, bo nie wiem, czy go dać, czy nie
-# resource "aws_ecr_repository" "ecr-repo-test" {
-#   name = "ecr-repo-test"
-#   count = 1
-
-#   image_tag_mutability = var.repository_image_tag_mutability
-  
-#   force_delete = var.repository_force_delete
-
-#   image_scanning_configuration {
-#     scan_on_push = var.repository_image_scan_on_push
-#   }
-
-#   tags = var.tags
-# }
