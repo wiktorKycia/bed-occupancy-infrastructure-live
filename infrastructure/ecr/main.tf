@@ -22,6 +22,12 @@ locals {
   region = "eu-central-1"
   name   = "bed-occupancy"
 
+  docker_images = {
+    "frontend",
+    "backend",
+    "db"
+  }
+
   tags = {
     Name       = local.name
     Repository = "https://github.com/wiktorKycia/bed-occupancy-infrastructure-live/tree/basic-config-and-ecr"
@@ -34,7 +40,9 @@ data "aws_caller_identity" "current" {}
 module "ecr" {
   source = "terraform-aws-modules/ecr/aws"
 
-  repository_name = "${local.name}-ecr-repo"
+  for_each = toset(local.docker_images)
+
+  repository_name = "${local.name}-${each.key}"
 
   repository_read_write_access_arns = [data.aws_caller_identity.current.arn]
   repository_lifecycle_policy = jsonencode({
@@ -61,5 +69,6 @@ module "ecr" {
   tags = merge(local.tags, {
     Terraform   = "true"
     Environment = "dev"
+    ServiceName = each.key
   })
 }
