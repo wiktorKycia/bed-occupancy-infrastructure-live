@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     bucket = "bed-occupancy-terraform-remote-state"
     key    = "bed-occupancy/terraform.tfstate"
-    region = local.region
+    region = "eu-central-1"
   }
 }
 
