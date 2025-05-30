@@ -62,6 +62,7 @@ module "ecr" {
   })
 }
 
+# tu jest resource zakomentowany, bo nie wiem, czy go dać, czy nie
 # resource "aws_ecr_repository" "ecr-repo-test" {
 #   name = "ecr-repo-test"
 #   count = 1
