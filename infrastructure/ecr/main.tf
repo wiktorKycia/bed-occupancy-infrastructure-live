@@ -54,6 +54,8 @@ module "ecr" {
     ]
   })
 
+  repository_image_tag_mutability = var.repository_image_tag_mutability
+
   repository_force_delete = var.repository_force_delete
 
   tags = merge(local.tags, {
