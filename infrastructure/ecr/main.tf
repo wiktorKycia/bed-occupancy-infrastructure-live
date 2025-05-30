@@ -25,6 +25,7 @@ locals {
   docker_images = {
     "frontend",
     "backend",
+    "faker",
     "db"
   }
 
