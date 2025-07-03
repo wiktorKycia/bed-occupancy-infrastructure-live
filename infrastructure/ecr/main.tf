@@ -22,12 +22,12 @@ locals {
   region = "eu-central-1"
   name   = "bed-occupancy"
 
-  docker_images = {
+  docker_images = [
     "frontend",
     "backend",
     "faker",
     "db"
-  }
+  ]
 
   tags = {
     Name       = local.name
