@@ -53,7 +53,7 @@ module "aws_vpc" {
 
   private_subnets  = var.private_subnets
   database_subnets = var.database_subnets
-  public_subnets   = var.public_subnets 
+  public_subnets   = var.public_subnets
 
   private_subnet_names  = var.private_subnet_names
   database_subnet_names = var.database_subnet_names
