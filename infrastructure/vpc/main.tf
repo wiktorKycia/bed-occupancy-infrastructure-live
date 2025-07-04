@@ -54,17 +54,17 @@ module "aws_vpc" {
 
   azs = local.azs
 
-  private_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
-  database_subnets = ["10.0.3.0/24"]
-  public_subnets   = ["10.0.101.0/24"]
+  private_subnets  = var.private_subnets
+  database_subnets = var.database_subnets
+  public_subnets   = var.public_subnets 
 
-  private_subnet_names  = ["backend", "frontend"]
-  database_subnet_names = ["db"]
-  public_subnet_names   = ["load balancer"]
+  private_subnet_names  = var.private_subnet_names
+  database_subnet_names = var.database_subnet_names
+  public_subnet_names   = var.public_subnet_names
 
   create_database_subnet_group = true
 
-  enable_nat_gateway = true
+  enable_nat_gateway = var.enable_nat_gateway
 
   tags = local.tags
 }
