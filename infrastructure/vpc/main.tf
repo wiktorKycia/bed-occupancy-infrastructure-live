@@ -56,8 +56,9 @@ module "aws_vpc" {
 
   private_subnet_names  = ["backend", "frontend"]
   database_subnet_names = ["db"]
+  public_subnet_names   = ["load balancer"]
 
-  create_database_subnet_group  = true
+  create_database_subnet_group = true
 
   enable_nat_gateway = true
 
