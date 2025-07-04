@@ -17,12 +17,20 @@ provider "aws" {
   region = local.region
 }
 
+
+# automatic arn and account data detection
+data "aws_caller_identity" "current" {}
+
+data "aws_availability_zones" "available" {}
+
 # local variables
 locals {
   region = "eu-central-1"
   name   = "bed-occupancy"
 
   vpc_cidr = "10.0.0.0/16"
+
+  azs = [for az in data.aws_availability_zones.available.names : az]
 
   docker_images = [
     "frontend",
@@ -37,10 +45,6 @@ locals {
   }
 }
 
-# automatic arn and account data detection
-data "aws_caller_identity" "current" {}
-
-data "aws_availability_zones" "available" {}
 
 module "aws_vpc" {
   source = "terraform-aws-modules/vpc/aws"
@@ -48,7 +52,7 @@ module "aws_vpc" {
   name = local.name
   cidr = local.vpc_cidr
 
-  azs = [for az in data.aws_availability_zones.available.names : az]
+  azs = local.azs
 
   private_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
   database_subnets = ["10.0.3.0/24"]
