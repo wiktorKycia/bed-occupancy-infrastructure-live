@@ -58,7 +58,7 @@ module "db" {
   master_user_password_rotate_immediately = false
 
   multi_az               = true
-  db_subnet_group_name   = module.vpc.database_subnet_group
+  db_subnet_group_name   = module.vpc.database_subnet_group_name
 
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   create_cloudwatch_log_group     = true

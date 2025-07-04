@@ -32,3 +32,13 @@ output "vpc_cidr_block" {
   value = module.aws_vpc.vpc_cidr_block
   description = "The CIDR block of the VPC"
 }
+
+output "database_subnet_group" {
+  description = "ID of database subnet group"
+  value       = module.vpc.database_subnet_group
+}
+
+output "database_subnet_group_name" {
+  description = "Name of database subnet group"
+  value       = module.vpc.database_subnet_group_name
+}
