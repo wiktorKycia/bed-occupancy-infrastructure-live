@@ -91,14 +91,17 @@ module "kms" {
 
   # Grants
   grants = {
-    lambda = {
-      grantee_principal = aws_iam_role.lambda.arn
-      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
-      constraints = [{
+    rds = {
+      name              = "RDSGrant"
+      grantee_principal = "arn:aws:iam::${local.account_id}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+      operations        = ["Encrypt", "Decrypt", "ReEncryptFrom", "ReEncryptTo", "GenerateDataKey", "DescribeKey"]
+      constraints = [
+      {
         encryption_context_equals = {
-          Department = "Finance"
+        "aws:rds:db-id" = "*"
         }
-      }]
+      }
+      ]
     }
   }
 
