@@ -18,11 +18,6 @@ output "database_subnet_ids" {
   description = "The IDs of the database subnets"
 }
 
-output "nat_gateway_ids" {
-  value       = module.aws_vpc.nat_gateways
-  description = "The IDs of the NAT gateways"
-}
-
 output "route_table_ids" {
   value       = module.aws_vpc.private_route_table_ids
   description = "The IDs of the private route tables"
