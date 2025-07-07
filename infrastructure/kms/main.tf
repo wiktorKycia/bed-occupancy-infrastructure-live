@@ -89,20 +89,6 @@ module "kms" {
     }
   ]
 
-  # Aliases
-  aliases = ["one", "foo/bar"]
-  computed_aliases = {
-    ex = {
-      # Sometimes you want to pass in an upstream attribute as the name and
-      # that conflicts with using `for_each over a `toset()` since the value is not
-      # known until after applying. Instead, we can use `computed_aliases` to work
-      # around this limitation
-      # Reference: https://github.com/hashicorp/terraform/issues/30937
-      name = aws_iam_role.lambda.name
-    }
-  }
-  aliases_use_name_prefix = true
-
   # Grants
   grants = {
     lambda = {
