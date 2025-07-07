@@ -58,36 +58,6 @@ module "kms" {
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
   key_asymmetric_sign_verify_users       = [local.current_identity]
-  key_statements = [
-    {
-      sid = "CloudWatchLogs"
-      actions = [
-        "kms:Encrypt*",
-        "kms:Decrypt*",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:Describe*"
-      ]
-      resources = ["*"]
-
-      principals = [
-        {
-          type        = "Service"
-          identifiers = ["logs.${local.region}.amazonaws.com"]
-        }
-      ]
-
-      condition = [
-        {
-          test     = "ArnLike"
-          variable = "kms:EncryptionContext:aws:logs:arn"
-          values = [
-            "arn:aws:logs:${local.region}:${local.account_id}:log-group:*",
-          ]
-        }
-      ]
-    }
-  ]
 
   # Grants
   grants = {
