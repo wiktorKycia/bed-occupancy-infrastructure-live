@@ -25,8 +25,6 @@ locals {
   region = "eu-central-1"
   name   = "bed-occupancy"
 
-  azs = [for az in data.aws_availability_zones.available.names : az]
-
   account_id       = data.aws_caller_identity.current.account_id
   current_identity = data.aws_caller_identity.current.arn
 
