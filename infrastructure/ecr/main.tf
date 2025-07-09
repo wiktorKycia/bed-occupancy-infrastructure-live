@@ -26,8 +26,10 @@ provider "aws" {
 
 # local variables
 locals {
+
   region = data.terraform_remote_state.infrastructure.outputs.region
   name = data.terraform_remote_state.infrastructure.outputs.name
+
 
   docker_images = [
     "frontend",
@@ -35,7 +37,9 @@ locals {
     "faker",
     "db"
   ]
+
   tags = data.terraform_remote_state.infrastructure.outputs.tags
+
 }
 
 # automatic arn and account data detection
