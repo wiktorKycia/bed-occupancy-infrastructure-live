@@ -12,6 +12,13 @@ terraform {
   }
 }
 
+data "terraform_remote_state" "infrastructure" {
+  backend = "local"
+  config = {
+    path = "../terraform.tfstate"
+  }
+}
+
 # Configure the AWS Provider
 provider "aws" {
   region = local.region
@@ -19,8 +26,8 @@ provider "aws" {
 
 # local variables
 locals {
-  region = "eu-central-1"
-  name   = "bed-occupancy"
+  region = data.terraform_remote_state.infrastructure.outputs.region
+  name = data.terraform_remote_state.infrastructure.outputs.name
 
   docker_images = [
     "frontend",
@@ -28,11 +35,7 @@ locals {
     "faker",
     "db"
   ]
-
-  tags = {
-    Name       = local.name
-    Repository = "https://github.com/wiktorKycia/bed-occupancy-infrastructure-live/tree/basic-config-and-ecr"
-  }
+  tags = data.terraform_remote_state.infrastructure.outputs.tags
 }
 
 # automatic arn and account data detection
