@@ -22,17 +22,21 @@ data "aws_caller_identity" "current" {}
 
 data "aws_availability_zones" "available" {}
 
+data "terraform_remote_state" "infrastructure" {
+  backend = "local"
+  config = {
+    path = "../terraform.tfstate"
+  }
+}
+
 # local variables
 locals {
-  region = "eu-central-1"
-  name   = "bed-occupancy"
+  region = data.terraform_remote_state.infrastructure.outputs.region
+  name = data.terraform_remote_state.infrastructure.outputs.name
 
   azs = [for az in data.aws_availability_zones.available.names : az]
-
-  tags = {
-    Name       = local.name
-    Repository = "https://github.com/wiktorKycia/bed-occupancy-infrastructure-live/tree/basic-config-and-ecr"
-  }
+  
+  tags = data.terraform_remote_state.infrastructure.outputs.tags
 }
 
 module "db" {
