@@ -14,7 +14,7 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = data.terraform_remote_state.infrastructure.outputs.region
+  region = local.region
 }
 
 # automatic arn and account data detection
@@ -29,8 +29,13 @@ data "terraform_remote_state" "infrastructure" {
 
 # local variables
 locals {
+  region = data.terraform_remote_state.infrastructure.outputs.region
+  name = data.terraform_remote_state.infrastructure.outputs.name
+
   account_id       = data.aws_caller_identity.current.account_id
   current_identity = data.aws_caller_identity.current.arn
+
+  tags = data.terraform_remote_state.infrastructure.outputs.tags
 }
 
 
@@ -72,5 +77,5 @@ module "kms" {
     }
   }
 
-  tags = data.terraform_remote_state.infrastructure.outputs.tags
+  tags = local.tags
 }
