@@ -22,16 +22,8 @@ data "aws_caller_identity" "current" {}
 
 # local variables
 locals {
-  region = "eu-central-1"
-  name   = "bed-occupancy"
-
   account_id       = data.aws_caller_identity.current.account_id
   current_identity = data.aws_caller_identity.current.arn
-
-  tags = {
-    Name       = local.name
-    Repository = "https://github.com/wiktorKycia/bed-occupancy-infrastructure-live/tree/basic-config-and-ecr"
-  }
 }
 
 
